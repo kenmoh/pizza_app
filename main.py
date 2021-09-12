@@ -1,15 +1,24 @@
 import os
 from dotenv import load_dotenv
 import uvicorn
-from auth_routes import auth_router
-from order_routes import order_router
 from tortoise.contrib.fastapi import register_tortoise
+from fastapi_jwt_auth import AuthJWT
 
 from fastapi import FastAPI
+
+from schemas import Settings
+from auth_routes import auth_router
+from order_routes import order_router
 
 app = FastAPI(title='Pizza Delivery Application')
 
 load_dotenv()
+
+
+@AuthJWT.load_config
+def get_config():
+    return Settings()
+
 
 app.include_router(auth_router)
 app.include_router(order_router)
@@ -28,6 +37,7 @@ register_tortoise(
     generate_schemas=True,
     add_exception_handlers=True
 )
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

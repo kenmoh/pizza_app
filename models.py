@@ -1,6 +1,3 @@
-from datetime import datetime
-from pydantic import BaseModel, EmailStr, SecretStr
-from pydantic.schema import encode_default
 from tortoise import fields, models
 from tortoise.contrib.pydantic import pydantic_model_creator
 
@@ -17,14 +14,6 @@ class User(models.Model):
 
     class Meta:
         table = 'users'
-
-
-# class CreateUser(BaseModel):
-#     username: str
-#     email: EmailStr
-#     password: str
-#     is_staff: bool
-#     is_active: bool
 
 
 class Order(models.Model):

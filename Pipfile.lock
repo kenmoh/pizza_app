@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ae50ed8618cc61c38ae16d8816233902bf7b2ff8ddfc662e735b650d167680bb"
+            "sha256": "78eceda94097c1920b0bf95c44e5493d0d4332358e510a4a432c4563fe7496b4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -81,6 +81,14 @@
             "index": "pypi",
             "version": "==0.68.1"
         },
+        "fastapi-jwt-auth": {
+            "hashes": [
+                "sha256:43110a227e36f93b99257a1c79e66df8ed3d4c893291db8f9db2686192011f17",
+                "sha256:d98068a9e828fe5909a1f338efabc3bb53149f11a9d2d395ab9d90fbb486b375"
+            ],
+            "index": "pypi",
+            "version": "==0.5.0"
+        },
         "h11": {
             "hashes": [
                 "sha256:36a3cb8c0a032f56e2da7084577878a035d3b61d104230d4bd49c0c6b555a9c6",
@@ -134,6 +142,13 @@
             ],
             "index": "pypi",
             "version": "==1.8.2"
+        },
+        "pyjwt": {
+            "hashes": [
+                "sha256:5c6eca3c2940464d106b99ba83b00c6add741c9becaec087fb7ccdefea71350e",
+                "sha256:8d59a976fb773f3e6a39c85636357c4f0e242707394cadadd9814f5cbaa20e96"
+            ],
+            "version": "==1.7.1"
         },
         "pypika-tortoise": {
             "hashes": [
