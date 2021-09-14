@@ -7,8 +7,8 @@ class User(models.Model):
     username = fields.CharField(max_length=255, unique=True)
     email = fields.CharField(max_length=255, unique=True)
     password = fields.CharField(max_length=255)
-    is_staff = fields.BooleanField(blank=True, default=False)
-    is_active = fields.BooleanField(blank=True, default=False)
+    is_staff = fields.BooleanField(default=False, null=True)
+    is_active = fields.BooleanField(default=False, null=True)
     created_at = fields.DatetimeField(auto_now_add=True)
     modified_at = fields.DatetimeField(auto_now=True)
 
@@ -36,7 +36,7 @@ class Order(models.Model):
         choices=ORDER_STATUS, default='PENDING', max_length=255)
     pizza_size = fields.CharField(
         choices=PIZZA_SIZES, default='SMALL', max_length=255)
-    price = fields.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    price = fields.DecimalField(max_digits=1, decimal_places=2, default=0.00)
     order_by = fields.ForeignKeyField(
         'models.User', on_delete=fields.CASCADE)
     created_at = fields.DatetimeField(auto_now_add=True)

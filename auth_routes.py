@@ -6,7 +6,7 @@ from fastapi.params import Depends
 from fastapi_jwt_auth.auth_jwt import AuthJWT
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User,  User_Pydantic, UserIn_Pydantic
-from schemas import LoginModel
+from schemas import EditUser, LoginModel, Register
 
 
 auth_router = APIRouter(
@@ -33,7 +33,7 @@ async def get_all_users():
 
 
 @auth_router.post('/register', response_model=User_Pydantic, status_code=status.HTTP_201_CREATED)
-async def register(users: UserIn_Pydantic):
+async def register(users: Register):
     db_username = await User.get_or_none(username=users.username)
     if db_username is not None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
@@ -48,8 +48,8 @@ async def register(users: UserIn_Pydantic):
         username=users.username,
         email=users.email,
         password=generate_password_hash(users.password),
-        is_active=users.is_active,
-        is_staff=users.is_staff,
+        # is_active=users.is_active,
+        # is_staff=users.is_staff,
     )
 
     await new_user.save()
@@ -77,7 +77,8 @@ async def refresh_token(Authorize: AuthJWT = Depends()):
     try:
         Authorize.jwt_refresh_token_required()
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORISED)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORISED, detail='Invalid Token')
 
     current_user = Authorize.get_jwt_subject()
     access_token = Authorize.create_access_token(subject=current_user)
@@ -91,8 +92,9 @@ async def get_single_user(user_id: str,):
 
 
 @auth_router.put('/users/{user_id}', response_model=User_Pydantic, status_code=status.HTTP_200_OK)
-async def update_user(user_id: str, user: UserIn_Pydantic):
+async def update_user(user_id: str, user: EditUser):
     await User.filter(id=user_id).update(**user.dict(exclude_unset=True))
+
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
 
