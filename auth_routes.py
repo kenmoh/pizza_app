@@ -94,7 +94,6 @@ async def get_single_user(user_id: str,):
 @auth_router.put('/users/{user_id}', response_model=User_Pydantic, status_code=status.HTTP_200_OK)
 async def update_user(user_id: str, user: EditUser):
     await User.filter(id=user_id).update(**user.dict(exclude_unset=True))
-
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
 

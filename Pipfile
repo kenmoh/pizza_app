@@ -11,6 +11,7 @@ python-dotenv = "*"
 pydantic = {extras = ["email"], version = "*"}
 werkzeug = "*"
 fastapi-jwt-auth = "*"
+aerich = "*"
 
 [dev-packages]
 autopep8 = "*"
