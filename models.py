@@ -1,7 +1,7 @@
-from pydantic.types import conlist
-from schemas import OrderStatus, OrderStatusEnum, PizzaSize
 from tortoise import fields, models
 from tortoise.contrib.pydantic import pydantic_model_creator
+
+from schemas import OrderStatus, OrderStatusEnum, PizzaSize
 
 
 class User(models.Model):

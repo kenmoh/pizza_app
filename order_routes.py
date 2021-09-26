@@ -1,13 +1,15 @@
 from typing import List
 
 from fastapi.encoders import jsonable_encoder
-from schemas import OrderModel, OrderStatus
-from models import Order, OrderIn_Pydantic, Order_Pydantic, User, User_Pydantic
-from fastapi import APIRouter, status
-from fastapi.exceptions import HTTPException
 from fastapi.params import Depends
+from fastapi.exceptions import HTTPException
 from fastapi_jwt_auth.auth_jwt import AuthJWT
+from fastapi import APIRouter, status
+
 from tortoise.query_utils import Q
+
+from schemas import OrderModel, OrderStatus
+from models import Order, Order_Pydantic, User, User_Pydantic
 
 
 order_router = APIRouter(
@@ -146,3 +148,20 @@ async def update_order_status(order_id, order: OrderStatus, Authorize: AuthJWT =
     else:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="You are not authorized to carry out this operation!")
+
+
+@order_router.delete('/delete_order/{order_id}', status_code=status.HTTP_200_OK)
+async def delete_order(order_id, Authorize: AuthJWT = Depends()):
+    try:
+        Authorize.jwt_required()
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token')
+    try:
+        order_db = await Order.get(id=order_id)
+        await order_db.delete()
+        print(list(order_db))
+        return{"message": f"Order with id {order_id} deleted successfully!"}
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail=f"Order with ID {order_id} does not exist!")

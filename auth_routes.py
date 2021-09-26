@@ -5,7 +5,8 @@ from fastapi.exceptions import HTTPException
 from fastapi.params import Depends
 from fastapi_jwt_auth.auth_jwt import AuthJWT
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User,  User_Pydantic, UserIn_Pydantic
+
+from models import User,  User_Pydantic
 from schemas import EditUser, LoginModel, Register
 
 

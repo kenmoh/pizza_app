@@ -33,15 +33,15 @@ HOST = os.getenv('HOST')
 DB_NAME = os.getenv('DB_NAME')
 
 
-# TORTOISE_ORM = {
-#     "connections": {"default": f'{DB_TYPE}://{DB_USER}:{PASSWORD}@{HOST}/{DB_NAME}'},
-#     "apps": {
-#         "models": {
-#             "models": ["models", "aerich.models"],
-#             "default_connection": "default",
-#         },
-#     },
-# }
+TORTOISE_ORM = {
+    "connections": {"default": f'{DB_TYPE}://{DB_USER}:{PASSWORD}@{HOST}/{DB_NAME}'},
+    "apps": {
+        "models": {
+            "models": ["models", "aerich.models"],
+            "default_connection": "default",
+        },
+    },
+}
 
 register_tortoise(
     app,
